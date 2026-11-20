@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OpenAI spending limits: the hard limit most teams never turn on — CostWarden</title>
+<meta name="description" content="Soft limits email you; hard limits stop requests. How to turn on OpenAI's enforceable spending limit — and the holes that remain.">
+<link rel="canonical" href="https://costwarden.com/">
+<style>
+:root{--ink:#16211c;--mut:#5a6a62;--acc:#0e7a4f;--bg:#fbfaf7;--card:#fff;--line:#e3e0d8}
+*{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,'Segoe UI',sans-serif;background:var(--bg);color:var(--ink);line-height:1.65}
+.wrap{max-width:760px;margin:0 auto;padding:0 20px 64px}
+header.site{display:flex;justify-content:space-between;align-items:center;padding:18px 0;border-bottom:1px solid var(--line);margin-bottom:32px}
+.logo{font-weight:800;font-size:20px;color:var(--ink);text-decoration:none}
+nav a{margin-left:16px;color:var(--mut);text-decoration:none;font-size:15px}
+nav a:hover{color:var(--acc)}
+h1{font-size:40px;line-height:1.15;margin:8px 0 12px}
+h2{font-size:24px;margin-top:36px}
+.lede{font-size:19px;color:var(--mut)}
+.cta{display:inline-block;background:var(--acc);color:#fff;padding:12px 22px;border-radius:10px;text-decoration:none;font-weight:700;margin:8px 8px 8px 0}
+.cta.secondary{background:#fff;color:var(--acc);border:2px solid var(--acc)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 22px;margin:16px 0}
+.card h3{margin-top:0}
+.small{font-size:13px;color:var(--mut)}
+footer{border-top:1px solid var(--line);margin-top:48px;padding-top:16px;font-size:13px;color:var(--mut)}
+.opt{display:block;width:100%;text-align:left;background:#fff;border:1.5px solid var(--line);border-radius:10px;padding:13px 16px;margin:8px 0;font-size:16px;cursor:pointer}
+.opt:hover{border-color:var(--acc)}
+.progress{color:var(--mut);font-size:14px}
+.verdict{border-radius:12px;padding:16px 22px;color:#fff}
+.verdict-protected{background:#0e7a4f}.verdict-exposed{background:#b97a0e}.verdict-critical{background:#b02a1e}
+label{display:block;margin:14px 0 4px;font-weight:600}
+input,select{width:100%;padding:10px;border:1.5px solid var(--line);border-radius:8px;font-size:16px;background:#fff}
+#result{font-size:18px;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 20px;margin-top:20px}
+code{background:#eef0ea;padding:1px 6px;border-radius:5px}
+</style>
+
+<!-- Cloudflare Web Analytics (placeholder token — replace before launch) -->
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "REPLACE_WITH_CLOUDFLARE_WEB_ANALYTICS_TOKEN"}'></script>
+</head>
+<body>
+<div class="wrap">
+<header class="site">
+<a class="logo" href="/">🛡 CostWarden</a>
+<nav><a href="/audit/">Audit</a><a href="/calculator/">Calculator</a><a href="/guides/openai-spending-limit/">Guide</a><a href="/kit/">Guard Kit</a></nav>
+</header>
+
+<h1>OpenAI spending limits: the hard limit most teams never turn on</h1>
+<p class="small">Last checked: 2026-11-21 · Facts follow OpenAI's official documentation, linked throughout.</p>
+<h2>Soft limits email you. Hard limits stop.</h2>
+<p>OpenAI has two different mechanisms that are easy to confuse. A <strong>budget / soft limit</strong> sends an alert when you cross a threshold — spending continues. An <strong>enforceable spending limit</strong> rejects requests (HTTP 429) once the cap is hit. In 2026 OpenAI made the enforceable limit available at organization and project level — but it is <strong>opt-in and off by default</strong>. If you never opened that settings page, you do not have a hard limit.</p>
+<h2>How to turn it on</h2>
+<ol>
+<li>Open your organization's <a href="https://platform.openai.com/settings/organization/limits">limits settings</a> (requires an owner/admin role).</li>
+<li>Set a monthly hard limit for the organization — this is your outer wall.</li>
+<li>Repeat per project: project-level limits stop one runaway project from eating the org budget. See <a href="https://platform.openai.com/docs/guides/rate-limits">OpenAI's rate &amp; usage limits documentation</a>.</li>
+<li>Set alert thresholds well below the cap (50% / 80%) and route them somewhere you look daily.</li>
+<li>Use separate API keys per project and per automation, so a limit — or a disable — can target exactly one workload.</li>
+</ol>
+<h2>The holes that remain</h2>
+<div class="card">
+<p><strong>Monthly ≠ nightly.</strong> The cap is monthly. A loop at 3am can spend the whole month before the cap notices a problem — it only stops at the full monthly amount.</p>
+<p><strong>Enforcement isn't instant.</strong> Usage reporting lags, so spend can overshoot between checks.</p>
+<p><strong>It only covers OpenAI.</strong> Your Anthropic, OpenRouter, and coding-agent spend lives behind different switches, in different dashboards.</p>
+</div>
+<p>That gap — daily, cross-provider, agent-aware — is what the <a href="/audit/">Hard-Limit Audit</a> checks and the <a href="/kit/">Guard Kit</a> watches.</p>
+<p><a class="cta" href="/audit/">Run the free Hard-Limit Audit</a></p>
+
+
+<footer>
+<p>CostWarden (.com) is not affiliated with any other service of a similar name.</p>
+<p>Model prices: <a href="https://github.com/BerriAI/litellm">LiteLLM model_prices data</a> (MIT), fetched 2026-11-20. Prices change — always confirm in your provider's dashboard.</p>
+<p>© CostWarden · A static site: no accounts, no tracking of your inputs, no server holding your data.</p>
+</footer>
+</div>
+</body>
+</html>
