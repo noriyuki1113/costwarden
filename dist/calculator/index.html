@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI API cost calculator — CostWarden</title>
+<meta name="description" content="Estimate daily and monthly OpenAI, Anthropic and other LLM API costs from current list prices.">
+<link rel="canonical" href="https://costwarden.com/">
+<style>
+:root{--ink:#16211c;--mut:#5a6a62;--acc:#0e7a4f;--bg:#fbfaf7;--card:#fff;--line:#e3e0d8}
+*{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,'Segoe UI',sans-serif;background:var(--bg);color:var(--ink);line-height:1.65}
+.wrap{max-width:760px;margin:0 auto;padding:0 20px 64px}
+header.site{display:flex;justify-content:space-between;align-items:center;padding:18px 0;border-bottom:1px solid var(--line);margin-bottom:32px}
+.logo{font-weight:800;font-size:20px;color:var(--ink);text-decoration:none}
+nav a{margin-left:16px;color:var(--mut);text-decoration:none;font-size:15px}
+nav a:hover{color:var(--acc)}
+h1{font-size:40px;line-height:1.15;margin:8px 0 12px}
+h2{font-size:24px;margin-top:36px}
+.lede{font-size:19px;color:var(--mut)}
+.cta{display:inline-block;background:var(--acc);color:#fff;padding:12px 22px;border-radius:10px;text-decoration:none;font-weight:700;margin:8px 8px 8px 0}
+.cta.secondary{background:#fff;color:var(--acc);border:2px solid var(--acc)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 22px;margin:16px 0}
+.card h3{margin-top:0}
+.small{font-size:13px;color:var(--mut)}
+footer{border-top:1px solid var(--line);margin-top:48px;padding-top:16px;font-size:13px;color:var(--mut)}
+.opt{display:block;width:100%;text-align:left;background:#fff;border:1.5px solid var(--line);border-radius:10px;padding:13px 16px;margin:8px 0;font-size:16px;cursor:pointer}
+.opt:hover{border-color:var(--acc)}
+.progress{color:var(--mut);font-size:14px}
+.verdict{border-radius:12px;padding:16px 22px;color:#fff}
+.verdict-protected{background:#0e7a4f}.verdict-exposed{background:#b97a0e}.verdict-critical{background:#b02a1e}
+label{display:block;margin:14px 0 4px;font-weight:600}
+input,select{width:100%;padding:10px;border:1.5px solid var(--line);border-radius:8px;font-size:16px;background:#fff}
+#result{font-size:18px;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 20px;margin-top:20px}
+code{background:#eef0ea;padding:1px 6px;border-radius:5px}
+</style>
+
+<!-- Cloudflare Web Analytics (placeholder token — replace before launch) -->
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "REPLACE_WITH_CLOUDFLARE_WEB_ANALYTICS_TOKEN"}'></script>
+</head>
+<body>
+<div class="wrap">
+<header class="site">
+<a class="logo" href="/">🛡 CostWarden</a>
+<nav><a href="/audit/">Audit</a><a href="/calculator/">Calculator</a><a href="/guides/openai-spending-limit/">Guide</a><a href="/kit/">Guard Kit</a></nav>
+</header>
+
+<h1>AI API cost calculator</h1>
+<p class="lede">What a workload actually costs, per day and per month — computed locally from current list prices.</p>
+<label for="model">Model</label>
+<select id="model"></select>
+<label for="inp">Input tokens per request</label>
+<input id="inp" type="number" value="2000" min="0">
+<label for="out">Output tokens per request</label>
+<input id="out" type="number" value="500" min="0">
+<label for="req">Requests per day</label>
+<input id="req" type="number" value="1000" min="0">
+<div id="result">…</div>
+<p class="small">Prices: LiteLLM model_prices data (MIT), fetched 2026-11-20. List prices before discounts, caching, or batch pricing.</p>
+<div class="card"><h3>Know what it costs. Now check whether anything stops it.</h3>
+<p>A budget you calculated is not a budget that enforces itself. Run the 2-minute audit:</p>
+<p><a class="cta" href="/audit/">Run the free Hard-Limit Audit</a></p></div>
+<script id="price-data" type="application/json">{"source": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json", "source_project": "BerriAI/litellm model_prices_and_context_window.json (MIT)", "fetched": "2026-11-20", "models": [{"id": "gpt-5", "provider": "OpenAI", "input_per_token": 1.25e-06, "output_per_token": 1e-05, "max_input_tokens": 272000, "max_output_tokens": 128000}, {"id": "gpt-5-mini", "provider": "OpenAI", "input_per_token": 2.5e-07, "output_per_token": 2e-06, "max_input_tokens": 272000, "max_output_tokens": 128000}, {"id": "gpt-5-nano", "provider": "OpenAI", "input_per_token": 5e-08, "output_per_token": 4e-07, "max_input_tokens": 272000, "max_output_tokens": 128000}, {"id": "gpt-4.1", "provider": "OpenAI", "input_per_token": 2e-06, "output_per_token": 8e-06, "max_input_tokens": 1047576, "max_output_tokens": 32768}, {"id": "gpt-4.1-mini", "provider": "OpenAI", "input_per_token": 4e-07, "output_per_token": 1.6e-06, "max_input_tokens": 1047576, "max_output_tokens": 32768}, {"id": "gpt-4o", "provider": "OpenAI", "input_per_token": 2.5e-06, "output_per_token": 1e-05, "max_input_tokens": 128000, "max_output_tokens": 16384}, {"id": "gpt-4o-mini", "provider": "OpenAI", "input_per_token": 1.5e-07, "output_per_token": 6e-07, "max_input_tokens": 128000, "max_output_tokens": 16384}, {"id": "o3", "provider": "OpenAI", "input_per_token": 2e-06, "output_per_token": 8e-06, "max_input_tokens": 200000, "max_output_tokens": 100000}, {"id": "o4-mini", "provider": "OpenAI", "input_per_token": 1.1e-06, "output_per_token": 4.4e-06, "max_input_tokens": 200000, "max_output_tokens": 100000}, {"id": "claude-opus-4-5", "provider": "Anthropic", "input_per_token": 5e-06, "output_per_token": 2.5e-05, "max_input_tokens": 200000, "max_output_tokens": 64000}, {"id": "claude-sonnet-4-5", "provider": "Anthropic", "input_per_token": 3e-06, "output_per_token": 1.5e-05, "max_input_tokens": 200000, "max_output_tokens": 64000}, {"id": "claude-haiku-4-5", "provider": "Anthropic", "input_per_token": 1e-06, "output_per_token": 5e-06, "max_input_tokens": 200000, "max_output_tokens": 64000}, {"id": "gemini-2.5-pro", "provider": "Google", "input_per_token": 1.25e-06, "output_per_token": 1e-05, "max_input_tokens": 1048576, "max_output_tokens": 65536}, {"id": "gemini-2.5-flash", "provider": "Google", "input_per_token": 3e-07, "output_per_token": 2.5e-06, "max_input_tokens": 1048576, "max_output_tokens": 65536}, {"id": "gemini-2.5-flash-lite", "provider": "Google", "input_per_token": 1e-07, "output_per_token": 4e-07, "max_input_tokens": 1048576, "max_output_tokens": 65536}, {"id": "deepseek/deepseek-chat", "provider": "DeepSeek", "input_per_token": 2.8e-07, "output_per_token": 4.2e-07, "max_input_tokens": 131072, "max_output_tokens": 8192}, {"id": "deepseek/deepseek-reasoner", "provider": "DeepSeek", "input_per_token": 2.8e-07, "output_per_token": 4.2e-07, "max_input_tokens": 131072, "max_output_tokens": 65536}]}</script>
+<script src="/assets/calc-logic.js"></script>
+<script src="/assets/calc-ui.js"></script>
+
+
+<footer>
+<p>CostWarden (.com) is not affiliated with any other service of a similar name.</p>
+<p>Model prices: <a href="https://github.com/BerriAI/litellm">LiteLLM model_prices data</a> (MIT), fetched 2026-11-20. Prices change — always confirm in your provider's dashboard.</p>
+<p>© CostWarden · A static site: no accounts, no tracking of your inputs, no server holding your data.</p>
+</footer>
+</div>
+</body>
+</html>
