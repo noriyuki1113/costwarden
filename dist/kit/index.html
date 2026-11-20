@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Guard Kit — a self-hosted AI spend warden — CostWarden</title>
+<meta name="description" content="A self-hosted daily budget guard for OpenAI, Anthropic and OpenRouter. Runs in your Cloudflare account; your keys never leave.">
+<link rel="canonical" href="https://costwarden.com/">
+<style>
+:root{--ink:#16211c;--mut:#5a6a62;--acc:#0e7a4f;--bg:#fbfaf7;--card:#fff;--line:#e3e0d8}
+*{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,'Segoe UI',sans-serif;background:var(--bg);color:var(--ink);line-height:1.65}
+.wrap{max-width:760px;margin:0 auto;padding:0 20px 64px}
+header.site{display:flex;justify-content:space-between;align-items:center;padding:18px 0;border-bottom:1px solid var(--line);margin-bottom:32px}
+.logo{font-weight:800;font-size:20px;color:var(--ink);text-decoration:none}
+nav a{margin-left:16px;color:var(--mut);text-decoration:none;font-size:15px}
+nav a:hover{color:var(--acc)}
+h1{font-size:40px;line-height:1.15;margin:8px 0 12px}
+h2{font-size:24px;margin-top:36px}
+.lede{font-size:19px;color:var(--mut)}
+.cta{display:inline-block;background:var(--acc);color:#fff;padding:12px 22px;border-radius:10px;text-decoration:none;font-weight:700;margin:8px 8px 8px 0}
+.cta.secondary{background:#fff;color:var(--acc);border:2px solid var(--acc)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 22px;margin:16px 0}
+.card h3{margin-top:0}
+.small{font-size:13px;color:var(--mut)}
+footer{border-top:1px solid var(--line);margin-top:48px;padding-top:16px;font-size:13px;color:var(--mut)}
+.opt{display:block;width:100%;text-align:left;background:#fff;border:1.5px solid var(--line);border-radius:10px;padding:13px 16px;margin:8px 0;font-size:16px;cursor:pointer}
+.opt:hover{border-color:var(--acc)}
+.progress{color:var(--mut);font-size:14px}
+.verdict{border-radius:12px;padding:16px 22px;color:#fff}
+.verdict-protected{background:#0e7a4f}.verdict-exposed{background:#b97a0e}.verdict-critical{background:#b02a1e}
+label{display:block;margin:14px 0 4px;font-weight:600}
+input,select{width:100%;padding:10px;border:1.5px solid var(--line);border-radius:8px;font-size:16px;background:#fff}
+#result{font-size:18px;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 20px;margin-top:20px}
+code{background:#eef0ea;padding:1px 6px;border-radius:5px}
+</style>
+
+<!-- Cloudflare Web Analytics (placeholder token — replace before launch) -->
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "REPLACE_WITH_CLOUDFLARE_WEB_ANALYTICS_TOKEN"}'></script>
+</head>
+<body>
+<div class="wrap">
+<header class="site">
+<a class="logo" href="/">🛡 CostWarden</a>
+<nav><a href="/audit/">Audit</a><a href="/calculator/">Calculator</a><a href="/guides/openai-spending-limit/">Guide</a><a href="/kit/">Guard Kit</a></nav>
+</header>
+
+<h1>The Guard Kit</h1>
+<p class="lede">A warden that runs in <em>your</em> Cloudflare account. Your keys never leave your infrastructure — because there is no CostWarden server to send them to.</p>
+<div class="card"><h3>What it does</h3>
+<ul>
+<li>Deploys to your own Cloudflare Worker with a one-click Deploy button (~10 minutes)</li>
+<li>Polls OpenAI, Anthropic and OpenRouter spend on your schedule</li>
+<li>Alerts your Slack at 50% / 80% / 100% of the <strong>daily</strong> budget you set</li>
+<li>At 100%, automatically disables the runaway key where the provider's API allows it — and where it doesn't, sends a maximum-urgency alert instead (no fake promises)</li>
+<li>Configuration is environment variables only. No admin panel, no database, nothing to babysit</li>
+</ul></div>
+<div class="card"><h3>What it deliberately is not</h3>
+<p>Not a hosted SaaS. Not a proxy — it cannot block a single request before it happens, and billing data lags at every provider, so treat it as a fast brake, not a wall. Not an observability platform: no traces, no evals, no dashboards you'll never open.</p></div>
+<p><strong>Price: $59, one-time.</strong> No subscription.</p>
+<p><a class="cta" href="https://gumroad.com/l/REPLACE_WITH_GUARD_KIT_PREORDER">Preorder the Guard Kit — $59</a></p>
+<div class="card"><h3>The honest deal</h3>
+<p><strong>Built only if it validates:</strong> if we don't reach 5 preorders in the validation window, all preorders are refunded and the Kit won't be built.</p>
+<p><strong>Support:</strong> documentation and FAQ only. CostWarden is one person with no maintenance operation — the Kit is designed so it needs none: it runs on your Cloudflare account, on your schedule.</p>
+<p><strong>Updates:</strong> published as releases; taking them is optional and always your choice.</p>
+<p><strong>Refunds:</strong> preorders can be cancelled any time before release for a full refund.</p></div>
+<p class="small">Not sure you need it yet? The free <a href="/audit/">Hard-Limit Audit</a> shows you exactly which holes the Kit would close.</p>
+
+
+<footer>
+<p>CostWarden (.com) is not affiliated with any other service of a similar name.</p>
+<p>Model prices: <a href="https://github.com/BerriAI/litellm">LiteLLM model_prices data</a> (MIT), fetched 2026-11-20. Prices change — always confirm in your provider's dashboard.</p>
+<p>© CostWarden · A static site: no accounts, no tracking of your inputs, no server holding your data.</p>
+</footer>
+</div>
+</body>
+</html>
