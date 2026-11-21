@@ -21,7 +21,7 @@ SITE = "https://costwarden.com"
 CF_ANALYTICS_TOKEN = "REPLACE_WITH_CLOUDFLARE_WEB_ANALYTICS_TOKEN"
 # TODO: replace with the real Gumroad preorder URL once the product is
 # created in the owner's Gumroad account. Placeholder on purpose.
-GUMROAD_PREORDER_URL = "https://gumroad.com/l/REPLACE_WITH_GUARD_KIT_PREORDER"
+GUMROAD_PREORDER_URL = "https://noriyuki2.gumroad.com/l/mtkeg"
 
 CSS = """
 :root{--ink:#16211c;--mut:#5a6a62;--acc:#0e7a4f;--bg:#fbfaf7;--card:#fff;--line:#e3e0d8}
