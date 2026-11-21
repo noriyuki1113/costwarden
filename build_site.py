@@ -70,8 +70,6 @@ def page(title: str, desc: str, body: str, fetched: str, extra_head: str = "") -
 <link rel="canonical" href="{SITE}/">
 <style>{CSS}</style>
 {extra_head}
-<!-- Cloudflare Web Analytics (placeholder token — replace before launch) -->
-<script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{{"token": "{CF_ANALYTICS_TOKEN}"}}'></script>
 </head>
 <body>
 <div class="wrap">
